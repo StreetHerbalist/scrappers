@@ -3,11 +3,17 @@ import lxml
 import json
 from lxml import  html
 import re 
+import hashlib
 
 
 class scraper():
     HOST = 'https://www.bluesky.pl/'
    
+    @staticmethod
+    def create_uniq_id(link,price,departure,destination):
+        
+
+    
     @staticmethod
     def read_it(link_to_site):
         response = requests.get(link_to_site)
@@ -41,9 +47,6 @@ class scraper():
             }
             with open('StreetHerbalist/scrappers/flying_sites/info.json', "a+") as file:
                 json.dumps(file)
-
-
-
 
 instance = scraper()
 instance.extraction(self)
