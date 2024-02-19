@@ -4,15 +4,17 @@ import json
 from lxml import  html
 import re 
 import hashlib
+import selenium
 
 
 class scraper():
     HOST = 'https://www.bluesky.pl/'
    
     @staticmethod
-    def create_uniq_id(link,price,departure,destination):
-        
-
+    def create_uniq_id(price,departure,destination):
+        str_to_hash = (f'{destination}@{departure}@{price}')
+        f_id = hashlib.md5(str_to_hash.encode).hexdigest()
+        return f_id
     
     @staticmethod
     def read_it(link_to_site):
@@ -36,9 +38,15 @@ class scraper():
             for f_contener in final_conteners:
                 departure_place = f_contener.xpath('//span[@class="best-flights__country-text"]/text()')
                 price = f_contener.xpath('//span[@class="best-flights__price"]/text()')
+                f_id = self.create_uniq_id(price,departure_place,destination)
+                link_to_offers = f_contener.xpath('//div[@class="best-flights__btn-wrapper"]//a//@href')
+                tree_offers = self.read_it(link_to_offers)
+                link_one_offer = tree_offers.xpath('')
                 flight_details = {
                         "price" : price,
-                        "departure" : departure_place                
+                        "departure" : departure_place,
+                        "id" : f_id 
+                        "link_to_offer" :            
                         }
                 details.append(flight_details)
             flight_final_details = {
