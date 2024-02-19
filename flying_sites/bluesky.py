@@ -6,8 +6,8 @@ import re
 
 
 class scraper():
-    
     HOST = 'https://www.bluesky.pl/'
+   
     @staticmethod
     def read_it(link_to_site):
         response = requests.get(link_to_site)
@@ -31,7 +31,7 @@ class scraper():
                 departure_place = f_contener.xpath('//span[@class="best-flights__country-text"]/text()')
                 price = f_contener.xpath('//span[@class="best-flights__price"]/text()')
                 flight_details = {
-                        "price" : price
+                        "price" : price,
                         "departure" : departure_place                
                         }
                 details.append(flight_details)
@@ -41,7 +41,6 @@ class scraper():
             }
             with open('StreetHerbalist/scrappers/flying_sites/info.json', "a+") as file:
                 json.dumps(file)
-
 
 
 
